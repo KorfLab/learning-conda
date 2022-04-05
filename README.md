@@ -1,1 +1,4 @@
-# learning-conda
+Learning Conda
+==============
+
+Assumed: Unix
