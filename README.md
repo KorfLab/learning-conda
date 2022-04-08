@@ -8,6 +8,11 @@ Learning Conda
 
 ## Package Management ##
 
+Package management is a complex topic, so it will be explained using a couple 
+analogies.
+
+### Cooking Analogy ###
+
 Programs depend on libraries. It's sort of like saying that pizza depends on 
 ingredients. In order to make pizza, you need ingredients like flour, salt, 
 olive oil, cheese, etc. Computer programs, like some recipies, can be very 
@@ -18,36 +23,101 @@ Sometimes they fail to work properly because the "chef" didn't specify the
 ingredients exactly.
 
 A "package manager" is software that ensures that your ingredients are exactly 
-as you specify. So when you go to make your killer orange muffin recipe and you 
-specify "Original Tang" the grocer doesn't substitute "New Tang" because 
-that's what was easily available.
+as you specify. Suppose you have an awesome recipe for orange muffins that you 
+got from your grandmother. It calls for the artificial orange drink "Tang". 
+However, when you make the recipe it doesn't taste quite the same as you 
+remember. That's because the recipe was developed a long time ago, and Tang 
+today isn't the same as it used to be. If you want to make the original recipe, 
+you have to specify that "Tang" is actually "tang-1.0" and not the current 
+"tang-2.25". Thankfully, you can still import that from Mexico.
 
-When you install Linux, it comes with the latest versions of the various 
-libraries. Therefore, you get "Tang 2.0" which doesn't taste the same as 
-"Original Tang". So in order to get "Original Tang" you have to ship it in from 
-Mexico. Package mangers are the agents that go get "Original Tang" for you so 
-you can cook your killer orange muffins correctly.
+The recipe also calls for all-purpose flour. Your grandmother used to use Gold 
+Medal but you happen to have King Arthur. Do you need to try to replicate the 
+exact flour used at the time or will it work just fine with what you have? You 
+can imagine that specififying every single ingredient would be a pain. And it 
+is. So you just need to specify the things that have changed enough to break 
+the recipe.
+
+A "package manager" specifies a "base" set of ingredients for you to cook with. 
+It provides you with sugar, salt, flour etc. If you need something very 
+specific, it will get that for you.
+
+### Genomic Analysis Analogy ###
+
+Imagine you're performing and RNA-seq analysis. There are 2 major steps in the 
+process:
+
+1. aligning the reads to the genome
+2. performing differential expression analysis
+
+You last ran the pipeline 2 years ago and got a bunch of cool figures. However, 
+your PI lost some of the figures and wants you to regenerate them. So you run 
+the pipeline again and find that it doesn't work the same as it did. Why?
+
++ The genome you aligned to may have been updated
++ The alignment software may have been updated
++ The pipeline software may have been updated
++ The analysis software may have been updated
+
+Updates are necessary to fix bugs. But those bugs may change the behavior of 
+the software in ways you didn't predict. It's easy to specify exactly which 
+genome sequence you were using as you probably saved it. But exactly what 
+version of Python, bowtie, Snakemake, etc? You probably didn't write those 
+down. Even if you did, each of those programs relies on 10-20 libraries that 
+you don't even know the names of.
+
+### Functional Tests ###
+
+There is a very complex network of interdependancies in any computational 
+analysis. There is no way for you to keep track of all of them. What can you 
+do? You can check if the analysis gets the same answer as it used to.
+
++ Create a test set
++ Run the software
++ Save the output
+
+Later
+
++ Run the software again on the test set
++ Check if the output is the same as it was before
+
+If the output has changed, you have to fix _something_. That may be changing 
+your code to make it work with the new code. Or it may mean specifiying that 
+your code only works with specific, out-dated versions of software.
 
 ## Conda vs. Anaconda vs. Miniconda ##
 
-Conda is a package manager. When you ask it to install some software, it goes 
-out and finds the exact ingredients that are known to work.
+### Conda ###
 
-Conda is also an environment manager. Let's say that one of my recipes requires 
-"New Tang" and another "Original Tang". I can't use both at the same time, but 
-I can switch back and forth quickly by having two different environments, one 
-where "Tang" is "New Tang" and one where "Tang" is "Original Tang". To switch 
-from one to the other is simple as `conda activate newtang` or whatever I 
-happened to have named the environment. When conda is running an environment, 
-it will always tell you what's it's called on the command line. By default, 
-this is the "base" environment. Other environments get layered on top of this.
+Conda is a package manager. It tracks all of the software in use and all of 
+their dependancies.
+
+Conda is a software installer. If you need something that isn't currently 
+installed, Conda will go get it for you.
+
+Conda is an environment manager. It provides you a "base" environment with lots 
+of useful programs and libraries. However, if you want to customize your 
+environment, for example by requiring the use of out-dated software needed by 
+the RNAseq pipeline you wrote a while back, you can activate that specific 
+environment with a command such as:
+
+	conda activate rnaseq2020
+
+Conda duplicates software already in your computer. For example, Lubuntu 
+already comes with Python installed at `/usr/bin/python3`. When you activate a 
+conda enviornment, Python is now in `/home/yourname/anaconda/bin/python3`. Does 
+this sound wasteful? It is. So why do we do it? So we can exactly replicate an 
+environment at a later date.
+
+### Anaconda ###
 
 Anaconda is a pre-packaged version of Conda with a whole bunch of data analysis 
-software already installed. We use it to make sure our pantry is filled right 
-from the start.
+software already installed.
 
-Miniconda is a pre-packaged version of Conda with the minimal software needed. 
-If you're running a very small VM, you might prefer it.
+### Miniconda ###
+
+Miniconda is a minimally-packaged version of Conda. If you're running a very 
+small VM, you might prefer it.
 
 ## Mamba ##
 
