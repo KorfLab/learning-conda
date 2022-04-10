@@ -147,6 +147,8 @@ To actviate some other environment:
 
 ## Creating New Environments ##
 
+More needed in this section...
+
 To create a new environment for go development:
 
 	conda create --name godev
