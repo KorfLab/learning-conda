@@ -131,7 +131,7 @@ environment, you should install it in the base environment.
 
 	conda install mamba -n base -c conda-forge
 
-## Activating / Deactivatint Environments ##
+## Activating / Deactivating Environments ##
 
 To deactivate conda and reset your shell to the OS default behavior:
 
