@@ -44,7 +44,7 @@ specific, it will get that for you.
 
 ### Genomic Analysis Analogy ###
 
-Imagine you're performing and RNA-seq analysis. There are 2 major steps in the
+Imagine you're performing an RNA-seq analysis. There are 2 major steps in the
 process:
 
 1. aligning the reads to the genome
