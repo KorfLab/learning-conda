@@ -85,7 +85,7 @@ If the output has changed, you have to fix _something_. That may be changing
 your code to make it work with the new code. Or it may mean specifiying that
 your code only works with specific, out-dated versions of software.
 
-## Conda vs. Anaconda vs. Miniconda ##
+## Conda vs. Anaconda vs. Miniconda vs. Bioconda ##
 
 ### Conda ###
 
@@ -119,6 +119,11 @@ software already installed.
 
 Miniconda is a minimally-packaged version of Conda. If you're running a very
 small VM, you might prefer it.
+
+### Bioconda ###
+
+Bioconda is a _channel_ for Conda. That is, it's a location where Conda can
+find software. We install lots of programs via this channel.
 
 ## Mamba ##
 
