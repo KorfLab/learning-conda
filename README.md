@@ -1,17 +1,20 @@
 Learning Conda
 ==============
 
-## Assumptions ##
+Assumptions
+-----------
 
 + You have already followed https://github.com/KorfLab/setup
 + You have Anaconda already installed (because of the above)
 
-## Package Management ##
+
+Package Management
+------------------
 
 Package management is a complex topic, so it will be explained using a couple
 analogies.
 
-### Cooking Analogy ###
+### Cooking Analogy
 
 Programs depend on libraries. It's sort of like saying that pizza depends on
 ingredients. In order to make pizza, you need ingredients like flour, salt,
@@ -42,7 +45,7 @@ A "package manager" specifies a "base" set of ingredients for you to cook with.
 It provides you with sugar, salt, flour etc. If you need something very
 specific, it will get that for you.
 
-### Genomic Analysis Analogy ###
+### Genomic Analysis Analogy
 
 Imagine you're performing an RNA-seq analysis. There are 2 major steps in the
 process:
@@ -66,7 +69,9 @@ version of Python, bowtie, Snakemake, etc? You probably didn't write those
 down. Even if you did, each of those programs relies on 10-20 libraries that
 you don't even know the names of.
 
-### Functional Tests ###
+
+Functional Tests
+----------------
 
 There is a very complex network of interdependencies in any computational
 analysis. There is no way for you to keep track of all of them. What can you
@@ -85,9 +90,10 @@ If the output has changed, you have to fix _something_. That may be changing
 your code to make it work with the new code. Or it may mean specifiying that
 your code only works with specific, out-dated versions of software.
 
-## Conda vs. Anaconda vs. Miniconda vs. Bioconda ##
+Conda vs. Anaconda vs. Miniconda vs. Bioconda vs. Mamba
+-------------------------------------------------------
 
-### Conda ###
+### Conda
 
 Conda is a package manager. It tracks all of the software in use and all of
 their dependencies.
@@ -110,22 +116,22 @@ this sound wasteful? It is. So why do we do it? So we can exactly replicate an
 environment at a later date. This is a more important problem to solve than a
 little space in the filesystem.
 
-### Anaconda ###
+### Anaconda
 
 Anaconda is a pre-packaged version of Conda with a whole bunch of data analysis
 software already installed.
 
-### Miniconda ###
+### Miniconda
 
 Miniconda is a minimally-packaged version of Conda. If you're running a very
 small VM, you might prefer it.
 
-### Bioconda ###
+### Bioconda
 
 Bioconda is a _channel_ for Conda. That is, it's a location where Conda can
 find software. We install lots of programs via this channel.
 
-## Mamba ##
+### Mamba
 
 The Conda package resolver is the brains that figures out which ingredients
 each program requires. It isn't very efficient and sometimes it can take
@@ -136,7 +142,9 @@ environment, you should install it in the base environment.
 
 	conda install mamba -n base -c conda-forge
 
-## Activating / Deactivating Environments ##
+
+Activating / Deactivating Environments
+--------------------------------------
 
 To deactivate conda and reset your shell to the OS default behavior:
 
@@ -150,9 +158,11 @@ To actviate some other environment:
 
 	conda activate some_other_environment
 
-## Creating New Environments ##
 
-More needed in this section...
+Creating New Environments
+-------------------------
+
+### Example: go
 
 To create a new environment for go development:
 
@@ -167,4 +177,20 @@ To export your environment as yaml:
 To create an environment from a yml:
 
 	conda env create -f env.yml
+
+To remove:
+
+	conda env remove --name godev
+
+### Example: classic bioinformatics tools
+
+Some old-school bioinformatics programs in the blast and emboss suites.
+
+	conda create --name classic
+	conda activate classic
+	mamba install -c bioconda blast-legacy emboss
+
+Later, you want to add hmmer2
+
+	mamba install -c bioconda hmmer2 --name classic
 
