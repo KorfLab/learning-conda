@@ -5,7 +5,7 @@
 * You have already followed https://github.com/KorfLab/setup
 * You have Anaconda already installed (because of the above)
 
-## Package Management
+## Package Management with Conda
 
 Package management is a complex topic, so it will be explained using a couple analogies.
 
