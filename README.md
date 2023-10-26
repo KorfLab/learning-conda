@@ -30,8 +30,11 @@ Learning Conda
 Q: Yay, I have `conda` installed and I'm in the base environment. Why would I
 create new environments? Why not use base all the time?
 
-A: Most of the time, you can use the base environment. Sometimes you will run
-into problems.
+A: The base environment isn't meant to be used. Don't install anything in your
+base environment (except maybe `mamba`). Each time you install software, there
+is the potential for software conflicts. You wouldn't want conflicts in your
+base environment. Each new environment you create is a collection of compatible
+software.
 
 Fact: some versions of python incompatible with versions of python libraries.
 For example, you cannot use an old version of python with a new version of
@@ -42,7 +45,7 @@ conda create --name broken python=3.5 pandas=1.2
 ```
 
 In order to use an old version of python, you need the pandas that existed at
-that time. Thankfully, you can get it.
+that time. Sometimes, you can get it.
 
 ```
 conda create --name oldy python=3.5 pandas
@@ -55,25 +58,33 @@ that works with python 3.5.
 
 Fact: some versions of libraries are incompatible with other versions of
 libraries. In order to get software to run, you may have to specify version
-numbers of python and several libraries. Some people will tell you to specify
-your environnments very precisely because "you know it works" as is shown here.
+numbers of python and several libraries.
+
+Some people will tell you to specify your environnments very precisely because
+"you know it works" as is shown here.
 
 ```
 conda create --name myenv pandas=1.2 matplotlib=3.3
 ```
 
-The alternative is to specify your environment loosely, and let conda figure
-out the latest compatible versions (as of this writing, 2.1.1 and 3.7.2 for
-these to libraries).
+The alternative is to specify your environment generically, and let conda
+figure out the latest compatible versions (as of this writing, 2.1.1 and 3.7.2
+for these two libraries).
 
 ```
 conda create --name myenv pandas= matplotlib
 ```
 
-Which one should you do specific or loose? I'm in favor of defining loosely. In
-other words, don't use version numbers. Use the latest versions of everything
-where possible and only specify specific version numbers when there is a
-conflict.
+Which one should you do specific or general? I'm in favor of defining
+generally. In other words, don't use version numbers unless you have to. Use
+the latest versions of everything where possible and only specify version
+numbers when there is a conflict.
+
+If you over-specify the version numbers, you end up installing multiple, old
+versions of packages that may be entirely compatible. Your conda environment
+will be huge, out-of-date, redundant, and needlessly complex. Going back to the
+backing analogy, you will have name brand versions of 7 brands of white flour,
+4 brands of baking soda, 6 brands of butter, etc.
 
 Q: Why are we using `conda` for virtual enviornments when `python3 -m venv` is
 built in already?
@@ -84,5 +95,62 @@ manage, like sequence aligners, peak callers, etc.
 
 ## Managing Bioinformatics Software ##
 
+Q: Why manage software packages with conda when I already have package managers
+in Linux (apt, snap) or MacOS (homebrew)?
 
-## Making Recipes
+A: Conda is cross-platform. All of the environments you use on one computer can
+also be used on another with a completely different operating system. Linux,
+Mac, and Windows can all share the same environments.
+
+```
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+```
+
+Let's say you want to do some work with BLAST using the old (but still good)
+ncbi-blast software. First, create an environment called `blast` and then
+activate it.
+
+```
+conda create --name blast
+conda activate blast
+```
+
+You should see `(blast)` in your prompt. Next, install the `blast-legacy`
+package from the bioconda channel.
+
+```
+conda install -c bioconda blast-legacy
+```
+
+You now have a bunch of new executables in your `PATH` including `blastall` and
+`formatdb`. These programs are not available in your base environment or any
+other environment. You have to `conda install` the software into each
+environment separately. Again, don't install in the base environment.
+
+Q: What the heck is bioconda? What is a channel?
+
+
+## Sharing Environments ##
+
+One of the main reasons for creating environments is that they are shareable.
+You can create an environment with some useful programs that work together and
+other people can recreate that same enviroment very easily.
+
+To export your blast environment as a YAML file:
+
+```
+conda env export --name blast > blast.yml
+```
+
+Another person can then get all of the software from your environment using
+your YAML file.
+
+```
+conda env create -f blast.yml
+```
+
+
+## Making Recipes ##
