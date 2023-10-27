@@ -31,18 +31,18 @@ Learning Conda
 + pinning - specifying a version number of a package
 + recipe - directions for making a package (advanced users only)
 
-| Task                      | Command
-|:--------------------------|:------------------------------------------
-| create new env            | `conda create --name {env name}`
-| list envs                 | `conda env list`
-| activate base env         | `conda activate`
-| activate named env        | `conda activate {env name}`
-| install pkg in active env | `conda install <pkg>`
-| return to vanilla shell   | `conda deactivate`
-| save env as yaml          | `conda env export > env.yml`
-| create env from yaml      | `conda env create -f env.yml`
-| remove pkg from env       | `conda remove --name <env> <pkg>`
-| remove entire env         | `conda env remove --name <env>`
+| Task                              | Command Line
+|:----------------------------------|:----------------------------------------
+| create new environment            | `conda create --name <env name>`
+| list environments                 | `conda env list`
+| activate base environment         | `conda activate`
+| activate named environment        | `conda activate <env name>`
+| install pkg in active environment | `conda install <pkg>`
+| return to vanilla shell           | `conda deactivate`
+| save environment as yaml          | `conda env export > env.yml`
+| create environment from yaml      | `conda env create -f env.yml`
+| remove pkg from environment       | `conda remove --name <env> <pkg>`
+| remove entire environment         | `conda env remove --name <env>`
 
 
 ## Post-install Setup ##
@@ -54,13 +54,13 @@ you can install `mamba`. This is written in a faster language (C++ vs. python)
 but designed to work just like `conda`. Installing `mamba` is optional.
 
 ```
-conda install -c conda-forge mamba
+conda install -n base -c conda-forge mamba
 ```
 
-### bioconda
+### Bioconda
 
 Most members of the lab will want to install bioinformatics software from
-bioconda at some point. Perform this one-time configuration, which helps
+Bioconda at some point. Perform this one-time configuration, which helps
 resolve package dependencies more quickly by telling conda where and what order
 to look for packages.
 
@@ -81,6 +81,8 @@ base environment (except maybe `mamba`). Each time you install software, there
 is the potential for software conflicts. You wouldn't want conflicts in your
 base environment. Each new, named environment you create is a collection of
 compatible software overlying the base enviornment.
+
+---
 
 Fact: some versions of python are incompatible with versions of python
 libraries. For example, you cannot use an old version of python with a new
@@ -103,8 +105,8 @@ python 3.5 for some reason, you only get the old pandas, because that's the one
 that works with python 3.5.
 
 Fact: some versions of libraries are incompatible with other versions of
-libraries. In order to get software to run, you may have to specify version
-numbers of python and several libraries.
+libraries. In order to get software to run, you may have to pin version numbers
+of python and several libraries.
 
 Some people will tell you to specify your environnments very precisely because
 "you know it works" as is shown here.
@@ -120,18 +122,19 @@ figure out the latest compatible versions.
 conda create --name myenv pandas= matplotlib
 ```
 
-As of this writing, pandas is up to 2.1.1 and matplotlib is at 3.7.2. Which one
-should you do specific or general? I'm in favor of defining generally. In other
-words, don't use version numbers unless you have to. Use the latest versions of
-everything where possible and only specify version numbers when there is a
-conflict.
+As of this writing, pandas is up to 2.1.1 and matplotlib is at 3.7.2. I'm not
+sure what has changed, but it makes sense to pick up the latest version at all
+times. In other words, don't pin version numbers in your environments unless
+necessary. Only specify version numbers when there is a conflict.
 
-If you over-specify the version numbers, you end up installing multiple, old
+If you pin lots of version numbers, you end up installing multiple, old
 versions of packages. While this will work, your conda environment will be
 huge, out-of-date, functionally redundant, and needlessly complex. Going back
 to the cooking analogy, you will have 5 brands of white flour, 3 brands of
 yeast, 6 brands of olive oil, 12 types of cheese, etc. when really all you
 needed was 1 of each.
+
+---
 
 Q: Why are we using `conda` for virtual enviornments when `python3 -m venv` is
 built in already?
