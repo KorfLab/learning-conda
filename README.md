@@ -119,7 +119,7 @@ The alternative is to specify your environment generically, and let conda
 figure out the latest compatible versions.
 
 ```
-conda create --name myenv pandas= matplotlib
+conda create --name myenv pandas matplotlib
 ```
 
 As of this writing, pandas is up to 2.1.1 and matplotlib is at 3.7.2. I'm not
@@ -160,7 +160,7 @@ sometimes buggy, but the system generally works.
 In 2020, Apple started releasing computers with their M1 chip, which is based
 on ARM architecture. This means that all pre-compiled software, which is what
 conda provides, must be re-compiled for Apple Silicon. This will take some
-time, and currently some parts of conda ecosystem (e.g. Bioconda) are not
+time, and currently some parts of the conda ecosystem (e.g. Bioconda) are not
 available for Apple Silicon users.
 
 Apparently, it is possible to install Bioconda packages on ARM Macs using the
