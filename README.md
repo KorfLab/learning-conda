@@ -21,7 +21,7 @@ Learning Conda
 
 ## Glossary & Quick Reference ##
 
-+ anacodna - conda, plus a lot of packages for scientific analysis
++ anaconda - conda, plus a lot of packages for scientific analysis
 + bioconda - a channel hosting lots of bioinformatics packages
 + channel - a place where packages are kept on the Internet
 + conda - a package management program
