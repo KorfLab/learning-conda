@@ -5,7 +5,7 @@ Learning Conda
 
 * You have already followed https://github.com/KorfLab/setup
 * You have Miniconda or Anaconda already installed (because of the above)
-+ Your terminal has `(base)` in the prompt (because of the above)
+* Your terminal has `(base)` in the prompt (because of the above)
 
 
 ## Contents ##
