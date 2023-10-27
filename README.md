@@ -9,16 +9,18 @@ Learning Conda
 
 ### Cheat Sheet
 
-| Task                    | Command
-|:------------------------|:------------------------------------------
-| create new env          | `conda create --name {env name}`
-| list envs               | `conda env list`
-| activate base env       | `conda activate`
-| activate named env      | `conda activate {env name}`
-| return to vanilla shell | `conda deactivate`
-| save env as yaml        | `conda env export > env.yml`
-| create env from yaml    | `conda env create -f env.yml`
-| remove env              | `conda remove --name whatever`
+| Task                      | Command
+|:--------------------------|:------------------------------------------
+| create new env            | `conda create --name {env name}`
+| list envs                 | `conda env list`
+| activate base env         | `conda activate`
+| activate named env        | `conda activate {env name}`
+| install pkg in active env | `conda install <pkg>`
+| return to vanilla shell   | `conda deactivate`
+| save env as yaml          | `conda env export > env.yml`
+| create env from yaml      | `conda env create -f env.yml`
+| remove pkg from env       | `conda remove --name <env> <pkg>`
+| remove entire env         | `conda env remove --name <env>`
 
 ## Assumptions ##
 
@@ -36,9 +38,9 @@ is the potential for software conflicts. You wouldn't want conflicts in your
 base environment. Each new environment you create is a collection of compatible
 software.
 
-Fact: some versions of python incompatible with versions of python libraries.
-For example, you cannot use an old version of python with a new version of
-pandas. This command fails. Try it and observe the error message.
+Fact: some versions of python are incompatible with versions of python
+libraries. For example, you cannot use an old version of python with a new
+version of pandas. This command fails. Try it and observe the error message.
 
 ```
 conda create --name broken python=3.5 pandas=1.2
@@ -68,23 +70,23 @@ conda create --name myenv pandas=1.2 matplotlib=3.3
 ```
 
 The alternative is to specify your environment generically, and let conda
-figure out the latest compatible versions (as of this writing, 2.1.1 and 3.7.2
-for these two libraries).
+figure out the latest compatible versions.
 
 ```
 conda create --name myenv pandas= matplotlib
 ```
 
-Which one should you do specific or general? I'm in favor of defining
-generally. In other words, don't use version numbers unless you have to. Use
-the latest versions of everything where possible and only specify version
-numbers when there is a conflict.
+As of this writing, pandas is up to 2.1.1 and matplotlib is at 3.7.2. Which one
+should you do specific or general? I'm in favor of defining generally. In other
+words, don't use version numbers unless you have to. Use the latest versions of
+everything where possible and only specify version numbers when there is a
+conflict.
 
 If you over-specify the version numbers, you end up installing multiple, old
-versions of packages that may be entirely compatible. Your conda environment
-will be huge, out-of-date, redundant, and needlessly complex. Going back to the
-backing analogy, you will have name brand versions of 7 brands of white flour,
-4 brands of baking soda, 6 brands of butter, etc.
+versions of packages. While this will work, your conda environment will be
+huge, out-of-date, functionally redundant, and needlessly complex. Going back
+to the cooking analogy, you will have 5 brands of white flour, 3 brands of
+yeast, 6 brands of olive oil, etc. when really all you needed was 1 of each.
 
 Q: Why are we using `conda` for virtual enviornments when `python3 -m venv` is
 built in already?
@@ -100,7 +102,14 @@ in Linux (apt, snap) or MacOS (homebrew)?
 
 A: Conda is cross-platform. All of the environments you use on one computer can
 also be used on another with a completely different operating system. Linux,
-Mac, and Windows can all share the same environments.
+Mac, and Windows can all share the same environments (mostly).
+
+Most bioinformatics software comes from Bioconda. Bioconda is NOT a version of
+conda like Anaconda and Miniconda. Bioconda is a _channel_. It's repository
+that keeps track of a bunch of bioinformatics packages.
+
+Before you start installing software, make a few one-time configurations as
+shown below.
 
 ```
 conda config --add channels defaults
@@ -109,9 +118,9 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Let's say you want to do some work with BLAST using the old (but still good)
-ncbi-blast software. First, create an environment called `blast` and then
-activate it.
+Now let's install some software. Suppose you want to do some work with BLAST
+using the old (but still good) ncbi-blast software. First, create an
+environment called `blast` and then activate it.
 
 ```
 conda create --name blast
